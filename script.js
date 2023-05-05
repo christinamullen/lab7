@@ -1,14 +1,13 @@
-
 function getNewCatImage() {
     const url = "https://api.thecatapi.com/v1/images/search";
 
-    // Fetch data from API
+    //fetch the data
     fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json(); // Parse the JSON data
+        return response.json(); //Parses JSON data
       })
       .then((data) => {
         const imageUrl = data[0].url;
@@ -20,13 +19,12 @@ function getNewCatImage() {
         console.error("There was a problem with the fetch operation:", error);
       });
   }
-
+//button for new cat img
   const newImageButton = document.getElementById("newImageButton");
   newImageButton.addEventListener("click", getNewCatImage);
 
-  // Load an initial cat image
+  //loal ini cat image
   getNewCatImage();
-
 
   const map = L.map('map',{scrollWheelZoom:false}).setView([20.79124160473819, -156.96275559279405], 3.5);
 
@@ -51,7 +49,7 @@ const basemaps = {
   //torre: 41.8951267231113, 12.477067036339175
 
   
-  //array of locations
+  //array of coordinates
   const locations = {
     lanai: [20.79124160473819, -156.96275559279405],
     kings: [36.63178667648085, -119.46906677912959],
