@@ -1,4 +1,5 @@
 function getNewCatImage() {
+    //#1 the cat api
     const url = "https://api.thecatapi.com/v1/images/search";
 
     //fetch the data
@@ -11,7 +12,6 @@ function getNewCatImage() {
         })
         .then((data) => {
             const imageUrl = data[0].url;
-
             const catImageElement = document.getElementById("catImage");
             catImageElement.src = imageUrl;
         })
@@ -26,9 +26,12 @@ newImageButton.addEventListener("click", getNewCatImage);
 //loal ini cat image
 getNewCatImage();
 
-const map = L.map('map', {
-    scrollWheelZoom: false
-}).setView([20.79124160473819, -156.96275559279405], 3.5);
+const map = L.map('map').setView([20.79124160473819, -156.96275559279405], 3.5);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
 //define the various maptiles
 const basemaps = {
@@ -37,24 +40,16 @@ const basemaps = {
     }),
     Topography: L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
             layers: 'TOPO-WMS'
-        })
-
-        ,
+    }),
     Places: L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
             layers: 'OSM-Overlay-WMS'
-        })
-
-        ,
+    }),
     Stamen_Watercolor: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
             attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        })
-
-        ,
+    }),
     Esri_WorldImagery: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        })
-
-        ,
+    }),
     MapTiler_Streets_Hi_Res: L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}@2x.png?key=GFjeSdAB44Lvg8qhT4cR', {
         attribution: 'Tiles &copy; MapTiler &mdash; Source: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     })
@@ -77,10 +72,13 @@ const locations = {
     torre: [41.8951267231113, 12.477067036339175],
     roosevelt: [40.75200353277046, -73.957840454472],
 };
+//add ini marker to map
+const marker = L.marker(locations.lanai).addTo(map);
 
 //show map location
 function showLocation(coordinates) {
-    map.setView(coordinates, 13);
+    marker.setLatLng(coordinates); //change marker
+    map.setView(coordinates, 13); //change map view
 }
 
 //button listeners
