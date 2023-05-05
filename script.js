@@ -28,7 +28,7 @@ function getNewCatImage() {
   getNewCatImage();
 
 
-  const map = L.map('map',{scrollWheelZoom:false}).setView([-29.50, 145], 3.5);
+  const map = L.map('map',{scrollWheelZoom:false}).setView([20.79124160473819, -156.96275559279405], 3.5);
 
 //define the various maptiles
 const basemaps = { 
